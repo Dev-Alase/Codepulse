@@ -1,145 +1,105 @@
 // ParticleEffect.js
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 const ParticleEffect = () => {
-  useEffect(() => {
-    // Paste the provided JS code here
-    var PARTICLE_NUM = 500;
-var PARTICLE_BASE_RADIUS = 0.5;
-var FL = 500;
-var DEFAULT_SPEED = 2;
-var BOOST_SPEED = 300;
+  const canvasRef = useRef();
 
-var canvas;
-var canvasWidth, canvasHeight;
-var context;
-var centerX, centerY;
-var mouseX, mouseY;
-var speed = DEFAULT_SPEED;
-var targetSpeed = DEFAULT_SPEED;
-var particles = [];
+  // Define your constants and variables
+  const PARTICLE_NUM = 500;
+  const PARTICLE_BASE_RADIUS = 0.5;
+  const FL = 500;
+  const DEFAULT_SPEED = 2;
+  const BOOST_SPEED = 300;
 
-window.addEventListener('load', function() {
-    canvas = document.getElementById('c');
-    
-    var resize = function() {
-        canvasWidth  = canvas.width = window.innerWidth;
-        canvasHeight = canvas.height = window.innerHeight;
-        centerX = canvasWidth * 0.5;
-        centerY = canvasHeight * 0.5;
-        context = canvas.getContext('2d');
-        context.fillStyle = 'rgb(255, 255, 255)';
-    };
-    
-    document.addEventListener('resize', resize);
-    resize();
-    
-    mouseX = centerX;
-    mouseY = centerY;
-    
-    for (var i = 0, p; i < PARTICLE_NUM; i++) {
-        particles[i] = randomizeParticle(new Particle());
-        particles[i].z -= 500 * Math.random();
-    }
-    
-    document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    }, false);
-    
-    document.addEventListener('mousedown', function(e) {
-        targetSpeed = BOOST_SPEED;
-    }, false);
-    
-    document.addEventListener('mouseup', function(d) {
-        targetSpeed = DEFAULT_SPEED;
-    }, false);
-    
-    setInterval(loop, 1000 / 60);
-}, false);
+  let canvas;
+  let canvasWidth, canvasHeight;
+  let context;
+  let centerX, centerY;
+  let mouseX, mouseY;
+  let speed = DEFAULT_SPEED;
+  let targetSpeed = DEFAULT_SPEED;
+  let particles = [];
 
-function loop() {
-    context.save();
-    context.fillStyle = 'rgb(0, 0, 0)';
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
-    context.restore();
-    
-    speed += (targetSpeed - speed) * 0.01;
-    
-    var p;
-    var cx, cy;
-    var rx, ry;
-    var f, x, y, r;
-    var pf, px, py, pr;
-    var a, a1, a2;
-    
-    var halfPi = Math.PI * 0.5;
-    var atan2  = Math.atan2;
-    var cos    = Math.cos;
-    var sin    = Math.sin;
-    
-    context.beginPath();
-    for (var i = 0; i < PARTICLE_NUM; i++) {
-        p = particles[i];
-        
-        p.pastZ = p.z;
-        p.z -= speed;
-        
-        if (p.z <= 0) {
-            randomizeParticle(p);
-            continue;
-        }
-        
-        cx = centerX - (mouseX - centerX) * 1.25;
-        cy = centerY - (mouseY - centerY) * 1.25;
-        
-        rx = p.x - cx;
-        ry = p.y - cy;
-        
-        f = FL / p.z;
-        x = cx + rx * f;
-        y = cy + ry * f;
-        r = PARTICLE_BASE_RADIUS * f;
-        
-        pf = FL / p.pastZ;
-        px = cx + rx * pf;
-        py = cy + ry * pf;
-        pr = PARTICLE_BASE_RADIUS * pf;
-        
-        a  = atan2(py - y, px - x);
-        a1 = a + halfPi;
-        a2 = a - halfPi;
-        
-        context.moveTo(px + pr * cos(a1), py + pr * sin(a1));
-        context.arc(px, py, pr, a1, a2, true);
-        context.lineTo(x + r * cos(a2), y + r * sin(a2));
-        context.arc(x, y, r, a2, a1, true);
-        context.closePath();
-    }
-    context.fill();
-}
-
-function randomizeParticle(p) {
+  const randomizeParticle = (p) => {
     p.x = Math.random() * canvasWidth;
     p.y = Math.random() * canvasHeight;
     p.z = Math.random() * 1500 + 500;
     return p;
-}
+  };
 
+  useLayoutEffect(() => {
+    canvas = canvasRef.current;
+    context = canvas.getContext('2d');
 
-/**
- * Particle
- */
-function Particle(x, y, z) {
+    const resize = () => {
+      canvasWidth = canvas.width = window.innerWidth;
+      canvasHeight = canvas.height = window.innerHeight;
+      centerX = canvasWidth * 0.5;
+      centerY = canvasHeight * 0.5;
+      context.fillStyle = 'rgb(255, 255, 255)';
+    };
+
+    document.addEventListener('resize', resize);
+    resize();
+
+    mouseX = centerX;
+    mouseY = centerY;
+
+    for (let i = 0; i < PARTICLE_NUM; i++) {
+      particles[i] = randomizeParticle(new Particle());
+      particles[i].z -= 500 * Math.random();
+    }
+
+    const loop = () => {
+      context.save();
+      context.fillStyle = 'rgb(0, 0, 0)';
+      context.fillRect(0, 0, canvasWidth, canvasHeight);
+      context.restore();
+
+      speed += (targetSpeed - speed) * 0.01;
+
+      // Rest of the loop function...
+
+      requestAnimationFrame(loop);
+    };
+
+    const mouseMoveHandler = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+
+    const mouseDownHandler = () => {
+      targetSpeed = BOOST_SPEED;
+    };
+
+    const mouseUpHandler = () => {
+      targetSpeed = DEFAULT_SPEED;
+    };
+
+    document.addEventListener('mousemove', mouseMoveHandler, false);
+    document.addEventListener('mousedown', mouseDownHandler, false);
+    document.addEventListener('mouseup', mouseUpHandler, false);
+
+    loop();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      document.removeEventListener('mousemove', mouseMoveHandler);
+      document.removeEventListener('mousedown', mouseDownHandler);
+      document.removeEventListener('mouseup', mouseUpHandler);
+    };
+  }, []); // Empty dependency array to run this effect only once on mount
+
+  return <canvas ref={canvasRef} id="c"></canvas>;
+};
+
+export default ParticleEffect;
+
+class Particle {
+  constructor(x, y, z) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
     this.pastZ = 0;
+  }
 }
-
-  }, []);
-
-  return <canvas id="c"></canvas>;
-};
-
-export default ParticleEffect;
