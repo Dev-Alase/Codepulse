@@ -3,22 +3,14 @@ import React, { useLayoutEffect, useRef } from 'react';
 
 const ParticleEffect = () => {
   const canvasRef = useRef();
-
-  // Define your constants and variables
-  const PARTICLE_NUM = 500;
-  const PARTICLE_BASE_RADIUS = 0.5;
-  const FL = 500;
-  const DEFAULT_SPEED = 2;
-  const BOOST_SPEED = 300;
-
   let canvas;
-  let canvasWidth, canvasHeight;
   let context;
-  let centerX, centerY;
-  let mouseX, mouseY;
-  let speed = DEFAULT_SPEED;
-  let targetSpeed = DEFAULT_SPEED;
   let particles = [];
+  let mouseX, mouseY;
+  let centerX, centerY;
+  let canvasWidth, canvasHeight;
+  let speed = 2;
+  let targetSpeed = 2;
 
   const randomizeParticle = (p) => {
     p.x = Math.random() * canvasWidth;
@@ -45,8 +37,8 @@ const ParticleEffect = () => {
     mouseX = centerX;
     mouseY = centerY;
 
-    for (let i = 0; i < PARTICLE_NUM; i++) {
-      particles[i] = randomizeParticle(new Particle());
+    for (let i = 0; i < 500; i++) {
+      particles[i] = randomizeParticle({});
       particles[i].z -= 500 * Math.random();
     }
 
@@ -58,7 +50,45 @@ const ParticleEffect = () => {
 
       speed += (targetSpeed - speed) * 0.01;
 
-      // Rest of the loop function...
+      for (let i = 0; i < 500; i++) {
+        const p = particles[i];
+
+        p.pastZ = p.z;
+        p.z -= speed;
+
+        if (p.z <= 0) {
+          randomizeParticle(p);
+          continue;
+        }
+
+        const cx = centerX - (mouseX - centerX) * 1.25;
+        const cy = centerY - (mouseY - centerY) * 1.25;
+
+        const rx = p.x - cx;
+        const ry = p.y - cy;
+
+        const f = 500 / p.z;
+        const x = cx + rx * f;
+        const y = cy + ry * f;
+        const r = 0.5 * f;
+
+        const pf = 500 / p.pastZ;
+        const px = cx + rx * pf;
+        const py = cy + ry * pf;
+        const pr = 0.5 * pf;
+
+        const a = Math.atan2(py - y, px - x);
+        const a1 = a + Math.PI * 0.5;
+        const a2 = a - Math.PI * 0.5;
+
+        context.beginPath();
+        context.moveTo(px + pr * Math.cos(a1), py + pr * Math.sin(a1));
+        context.arc(px, py, pr, a1, a2, true);
+        context.lineTo(x + r * Math.cos(a2), y + r * Math.sin(a2));
+        context.arc(x, y, r, a2, a1, true);
+        context.closePath();
+        context.fill();
+      }
 
       requestAnimationFrame(loop);
     };
@@ -69,11 +99,11 @@ const ParticleEffect = () => {
     };
 
     const mouseDownHandler = () => {
-      targetSpeed = BOOST_SPEED;
+      targetSpeed = 300;
     };
 
     const mouseUpHandler = () => {
-      targetSpeed = DEFAULT_SPEED;
+      targetSpeed = 2;
     };
 
     document.addEventListener('mousemove', mouseMoveHandler, false);
@@ -88,18 +118,9 @@ const ParticleEffect = () => {
       document.removeEventListener('mousedown', mouseDownHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
     };
-  }, []); // Empty dependency array to run this effect only once on mount
+  }, []);
 
   return <canvas ref={canvasRef} id="c"></canvas>;
 };
 
 export default ParticleEffect;
-
-class Particle {
-  constructor(x, y, z) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.z = z || 0;
-    this.pastZ = 0;
-  }
-}
