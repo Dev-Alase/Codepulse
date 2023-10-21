@@ -7,11 +7,60 @@
 }
 
 .formWrapper {
-  background: #282a36;
-  padding: 20px;
-  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.5); /* Black with 60% opacity */
+  padding: 40px; /* Increased padding for more space */
+  border-radius: 15px; /* Rounded corners for a softer look */
   width: 400px;
   max-width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+  text-align: center; /* Center-align the content */
+  color: #fff; /* White text color */
+}
+
+.mainLabel {
+  margin-bottom: 20px;
+  font-size: 18px; /* Increase font size for the main label */
+}
+
+.inputBox {
+  padding: 14px;
+  border-radius: 8px;
+  outline: none;
+  border: none;
+  margin-bottom: 16px;
+  background: #333; /* Darker background for input boxes */
+  color: #000; /* Black text color */
+  font-size: 16px;
+}
+
+
+.btn {
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  background: #4aed88; /* Green button color */
+  color: #fff; /* White text color */
+}
+
+.btn:hover {
+  background: #2b824c; /* Darker green on hover */
+}
+
+.createInfo,
+.createNewBtn {
+  color: #4aed88;
+  font-size: 14px;
+  margin-top: 20px;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.createNewBtn:hover {
+  color: #368654; /* Darker green on hover */
 }
 
 footer {
@@ -34,8 +83,9 @@ footer a {
 }
 
 .homePageLogo {
-  height: 80px;
-  margin-bottom: 30px;
+  height: 250px;
+  margin-bottom:-65px;
+  margin-top:-40px;
 }
 
 .inputBox {
@@ -128,7 +178,9 @@ footer a:hover {
 }
 
 .logoImage {
-  height: 60px;
+  height: 200px;
+  margin-top: -50px;
+  margin-bottom: -50px;
 }
 
 .leaveBtn {
