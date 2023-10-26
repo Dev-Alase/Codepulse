@@ -1,0 +1,76 @@
+/* Landingstyle.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bg-hero {
+  background: rgba(0, 0, 0, 0.3); /* Increased transparency */
+  color: #fff;
+  padding: 120px 0;
+  text-align: center;
+}
+
+.heading-black {
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #9C27B0, #673AB7, #3F51B5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 10s ease infinite;
+}
+
+.sub-heading {
+  font-size: 2em;
+  margin-bottom: 40px;
+  background: linear-gradient(to right, #9C27B0, #673AB7, #3F51B5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 10s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.lead {
+  font-size: 1.8em;
+  margin-bottom: 60px;
+  color: #f0f0f0;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #00b4db, #0083b0);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #0083b0, #00b4db);
+  transform: scale(1.1);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Increased transparency */
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}

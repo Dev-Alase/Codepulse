@@ -9,6 +9,7 @@ const Home = () => {
 
     const [roomId, setRoomId] = useState('');
     const [username, setUsername] = useState('');
+
     const createNewRoom = (e) => {
         e.preventDefault();
         const id = uuidV4();
@@ -18,11 +19,10 @@ const Home = () => {
 
     const joinRoom = () => {
         if (!roomId || !username) {
-            toast.error('ROOM ID & username is required');
+            toast.error('ROOM ID & username are required');
             return;
         }
 
-        // Redirect
         navigate(`/editor/${roomId}`, {
             state: {
                 username,
@@ -35,6 +35,7 @@ const Home = () => {
             joinRoom();
         }
     };
+
     return (
         <div className="homePageWrapper">
             <div className="formWrapper">
@@ -65,12 +66,8 @@ const Home = () => {
                         Join
                     </button>
                     <span className="createInfo">
-                    If you don't have an invite, create a &nbsp;
-                        <a
-                            onClick={createNewRoom}
-                            href=""
-                            className="createNewBtn"
-                        >
+                        If you don't have an invite, create a &nbsp;
+                        <a onClick={createNewRoom} href="" className="createNewBtn">
                             new room
                         </a>
                     </span>
@@ -78,9 +75,7 @@ const Home = () => {
             </div>
             <ParticleEffect />
             <footer>
-                <h4>
-                    Owned by WTproject;
-                </h4>
+                <h4>Owned by WTproject;</h4>
             </footer>
         </div>
     );
