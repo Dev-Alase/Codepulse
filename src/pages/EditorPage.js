@@ -4,12 +4,7 @@ import ACTIONS from '../Actions';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
 import { initSocket } from '../socket';
-import {
-    useLocation,
-    useNavigate,
-    Navigate,
-    useParams,
-} from 'react-router-dom';
+import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
 
 const EditorPage = () => {
     const socketRef = useRef(null);
@@ -18,6 +13,7 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
+    const [editingPermission, setEditingPermission] = useState(true);
 
     useEffect(() => {
         const init = async () => {
@@ -34,17 +30,18 @@ const EditorPage = () => {
             socketRef.current.emit(ACTIONS.JOIN, {
                 roomId,
                 username: location.state?.username,
+                editingPermission,
             });
 
-            // Listening for joined event
             socketRef.current.on(
                 ACTIONS.JOINED,
-                ({ clients, username, socketId }) => {
+                ({ clients, username, socketId, editingPermission }) => {
                     if (username !== location.state?.username) {
                         toast.success(`${username} joined the room.`);
                         console.log(`${username} joined`);
                     }
                     setClients(clients);
+                    setEditingPermission(editingPermission);
                     socketRef.current.emit(ACTIONS.SYNC_CODE, {
                         code: codeRef.current,
                         socketId,
@@ -52,7 +49,6 @@ const EditorPage = () => {
                 }
             );
 
-            // Listening for disconnected
             socketRef.current.on(
                 ACTIONS.DISCONNECTED,
                 ({ socketId, username }) => {
@@ -126,6 +122,7 @@ const EditorPage = () => {
                     onCodeChange={(code) => {
                         codeRef.current = code;
                     }}
+                    readOnly={!editingPermission}
                 />
             </div>
         </div>
