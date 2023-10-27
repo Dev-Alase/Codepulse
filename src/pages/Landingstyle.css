@@ -8,7 +8,7 @@ body {
 }
 
 .bg-hero {
-  background: rgba(0, 0, 0, 0.3); /* Increased transparency */
+  background: rgba(0, 0, 0, 0.5); /* Slightly increased transparency */
   color: #fff;
   padding: 120px 0;
   text-align: center;
@@ -17,19 +17,19 @@ body {
 .heading-black {
   font-size: 3.5em;
   margin-bottom: 20px;
-  background: linear-gradient(to right, #9C27B0, #673AB7, #3F51B5);
+  background: linear-gradient(to right, #3498db, #9b59b6, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite;
+  animation: gradient 10s ease infinite, glow 1.5s ease-in-out infinite alternate;
 }
 
 .sub-heading {
-  font-size: 2em;
+  font-size: 2.5em; /* Smaller font size for the tagline */
   margin-bottom: 40px;
-  background: linear-gradient(to right, #9C27B0, #673AB7, #3F51B5);
+  background: linear-gradient(to right, #3498db, #9b59b6, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite;
+  animation: gradient 10s ease infinite, glow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes gradient {
@@ -44,33 +44,69 @@ body {
   }
 }
 
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+  }
+}
+
 .lead {
   font-size: 1.8em;
   margin-bottom: 60px;
   color: #f0f0f0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: slideInUp 1s ease;
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #00b4db, #0083b0);
+  background: linear-gradient(to right, #3498db, #2980b9);
   color: #fff;
   border: none;
   padding: 12px 20px;
-  font-size: 1.5em;
+  font-size: 1.8em; /* Slightly larger font size for the button */
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Added color transition */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: slideInRight 1s ease; /* Added slideInRight animation */
 }
 
 .btn-primary:hover {
-  background: linear-gradient(to right, #0083b0, #00b4db);
-  transform: scale(1.1);
+  background: linear-gradient(to right, #2980b9, #3498db);
+  transform: scale(1.05);
+  color: #f0f0f0; /* Change text color on hover */
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.3); /* Increased transparency */
+  background: rgba(0, 0, 0, 0.9);
   color: #fff;
   padding: 10px 0;
   text-align: center;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

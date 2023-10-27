@@ -13,8 +13,8 @@ const LandingPage = () => (
         <div className="row vh-md-100">
           <div className="col-md-8 col-sm-10 col-12 mx-auto my-auto text-center">
             <h1 className="heading-black text-capitalize">Code-pulse</h1>
-            <h2 className="sub-heading text-capitalize">Quickly build landing pages with Knight</h2>
-            <p className="lead py-3">Knight is a platform that helps freelancers and companies build beautiful landing pages in minutes. Sign up for free.</p>
+            <h2 className="sub-heading text-capitalize">The real-time code editor that unleashes your creativity.</h2>
+            <p className="lead py-3">Step into coding's fast lane with our real-time editor—your ideas, instantly tangible. No more waiting; just code, collaborate, and create with unprecedented speed.</p>
             
             {/* Link to navigate to Home.js */}
             <Link to="/home">
