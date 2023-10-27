@@ -1,3 +1,4 @@
+// Home.js
 import React, { useState } from 'react';
 import { v4 as uuidV4 } from 'uuid';
 import toast from 'react-hot-toast';
@@ -74,9 +75,6 @@ const Home = () => {
                 </div>
             </div>
             <ParticleEffect />
-            <footer>
-                <h4>Owned by WTproject;</h4>
-            </footer>
         </div>
     );
 };

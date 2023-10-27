@@ -8,85 +8,101 @@ body {
 }
 
 .bg-hero {
-  background: rgba(0, 0, 0, 0.5); /* Slightly increased transparency */
+  background: rgba(0, 0, 0, 0);
   color: #fff;
-  padding: 120px 0;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Align text to the left */
+  padding: 120px 20px; /* Added some padding on the sides */
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .heading-black {
-  font-size: 3.5em;
+  font-size: 4em;
+  font-weight: bold;
   margin-bottom: 20px;
-  background: linear-gradient(to right, #3498db, #9b59b6, #3498db);
+  position: relative;
+  background: linear-gradient(to right, #ff6b6b, #ffa06a, #f3ff6d, #72ff6d, #72fff2, #738fff, #b872ff, #ff72f2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite, glow 1.5s ease-in-out infinite alternate;
+  animation: gradient 10s ease infinite, mirror 2s ease-in-out infinite, text-appear 2s forwards, fadeInLeft 1s ease forwards; /* Add the new animation to the element */
+  margin-bottom: 20px;
 }
 
+
+/* Define the animation for the fade-in effect from left */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* Rest of your CSS remains unchanged */
+
+
 .sub-heading {
-  font-size: 2.5em; /* Smaller font size for the tagline */
+  font-size: 2.5em;
   margin-bottom: 40px;
-  background: linear-gradient(to right, #3498db, #9b59b6, #3498db);
+  background: linear-gradient(to right, #00bfff, #8a2be2, #ee82ee, #4b0082);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite, glow 1.5s ease-in-out infinite alternate;
+  animation: gradient 10s ease infinite;
 }
 
 @keyframes gradient {
-  0% {
+  0%, 100% {
     background-position: 0% 50%;
   }
   50% {
     background-position: 100% 50%;
   }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
-@keyframes glow {
-  0% {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-  }
-  100% {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
-  }
-}
-
-.lead {
-  font-size: 1.8em;
+.lead-typed {
+  font-size: 1.5em;
   margin-bottom: 60px;
   color: #f0f0f0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0);
   animation: slideInUp 1s ease;
+  text-align: left;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  word-wrap: break-word;
 }
 
 .btn-primary {
-  background: linear-gradient(to right, #3498db, #2980b9);
+  background-color: #0080ff; /* Update the background color to a solid color */
   color: #fff;
   border: none;
-  padding: 12px 20px;
-  font-size: 1.8em; /* Slightly larger font size for the button */
+  padding: 10px 16px;
+  font-size: 1.2em;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease; /* Added color transition */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  animation: slideInRight 1s ease; /* Added slideInRight animation */
+  transition: background 0.3s ease, transform 0.3s ease;
+  margin: 0 auto;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(to right, #2980b9, #3498db);
+  background-color: #6a1b9a; /* Update the background color on hover to a different solid color */
   transform: scale(1.05);
-  color: #f0f0f0; /* Change text color on hover */
 }
 
-@keyframes slideInRight {
+@keyframes slideInUp {
   0% {
     opacity: 0;
-    transform: translateX(-20px);
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
@@ -94,12 +110,14 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0);
   color: #fff;
   padding: 10px 0;
   text-align: center;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   animation: fadeIn 1s ease;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 @keyframes fadeIn {
@@ -109,4 +127,18 @@ body {
   100% {
     opacity: 1;
   }
+}
+
+@keyframes typeIn {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.type-in {
+  animation: typeIn 2s ease-out;
+  word-wrap: break-word;
 }
