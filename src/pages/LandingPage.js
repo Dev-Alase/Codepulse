@@ -12,7 +12,7 @@ const LandingPage = () => {
     // Typed.js typing effect for the subheading
     const typedSubHeading = new Typed('.sub-heading', {
       strings: ["The real-time code editor that unleashes your creativity."],
-      typeSpeed: 40,
+      typeSpeed: 35,
       showCursor: false,
     });
 

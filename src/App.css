@@ -389,6 +389,8 @@ canvas {
 .copy-btn {
   background: #3498db; /* Blue color */
   color: #fff;
+  margin-top: 280px;
+  margin-bottom: 25px;
 }
 
 .leave-btn {
