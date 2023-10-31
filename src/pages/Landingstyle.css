@@ -4,6 +4,7 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
+  text-align: left;
   box-sizing: border-box;
 }
 
@@ -13,27 +14,12 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; /* Align text to the left */
-  padding: 120px 20px; /* Added some padding on the sides */
-  text-align: left;
-  margin-top: 20px;
+  align-items: flex-start;
+  padding: 120px 20px;
+  margin-top: -90px;
   margin-bottom: 20px;
 }
 
-.heading-black {
-  font-size: 4em;
-  font-weight: bold;
-  margin-bottom: 20px;
-  position: relative;
-  background: linear-gradient(to right, #ff6b6b, #ffa06a, #f3ff6d, #72ff6d, #72fff2, #738fff, #b872ff, #ff72f2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite, mirror 2s ease-in-out infinite, text-appear 2s forwards, fadeInLeft 1s ease forwards; /* Add the new animation to the element */
-  margin-bottom: 20px;
-}
-
-
-/* Define the animation for the fade-in effect from left */
 @keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -46,16 +32,13 @@ body {
 }
 
 
-/* Rest of your CSS remains unchanged */
-
-
 .sub-heading {
   font-size: 2.5em;
   margin-bottom: 40px;
   background: linear-gradient(to right, #00bfff, #8a2be2, #ee82ee, #4b0082);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradient 10s ease infinite;
+  animation: gradient 10s ease infinite; /* Add this line */
 }
 
 @keyframes gradient {
