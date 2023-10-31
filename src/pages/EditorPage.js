@@ -5,7 +5,7 @@ import ACTIONS from '../Actions';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
 import { initSocket } from '../socket';
-import { useLocation, useNavigate, useParams, Navigate} from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Navigate } from 'react-router-dom';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -19,7 +19,8 @@ const EditorPage = () => {
   useEffect(() => {
     const init = async () => {
       try {
-        socketRef.current = await initSocket();
+        // Use wss protocol for secure WebSocket connection
+        socketRef.current = await initSocket('wss://codesynchub.me/Codepulse');
         socketRef.current.on('connect_error', (err) => handleErrors(err));
         socketRef.current.on('connect_failed', (err) => handleErrors(err));
 

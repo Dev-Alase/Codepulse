@@ -8,7 +8,7 @@ const ACTIONS = require('./src/Actions');
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: '*', // Allow all origins, you can customize this
     methods: ['GET', 'POST'],
   },
 });
