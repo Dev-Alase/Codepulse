@@ -52,7 +52,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.0.0",
     "nodemon": "^2.0.15"
   }
 }
