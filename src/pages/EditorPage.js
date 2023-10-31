@@ -5,7 +5,7 @@ import ACTIONS from '../Actions';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
 import { initSocket } from '../socket';
-import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Navigate} from 'react-router-dom';
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -18,55 +18,63 @@ const EditorPage = () => {
 
   useEffect(() => {
     const init = async () => {
-      socketRef.current = await initSocket();
-      socketRef.current.on('connect_error', (err) => handleErrors(err));
-      socketRef.current.on('connect_failed', (err) => handleErrors(err));
+      try {
+        socketRef.current = await initSocket();
+        socketRef.current.on('connect_error', (err) => handleErrors(err));
+        socketRef.current.on('connect_failed', (err) => handleErrors(err));
 
-      function handleErrors(e) {
-        console.log('socket error', e);
-        toast.error('Socket connection failed, try again later.');
-        reactNavigator('/');
-      }
+        function handleErrors(e) {
+          console.log('socket error', e);
+          toast.error('Socket connection failed, try again later.');
+          reactNavigator('/');
+        }
 
-      socketRef.current.emit(ACTIONS.JOIN, {
-        roomId,
-        username: location.state?.username,
-        editingPermission,
-      });
+        socketRef.current.emit(ACTIONS.JOIN, {
+          roomId,
+          username: location.state?.username,
+          editingPermission,
+        });
 
-      socketRef.current.on(
-        ACTIONS.JOINED,
-        ({ clients, username, socketId, editingPermission }) => {
-          if (username !== location.state?.username) {
-            toast.success(`${username} joined the room.`);
-            console.log(`${username} joined`);
+        socketRef.current.on(
+          ACTIONS.JOINED,
+          ({ clients, username, socketId, editingPermission }) => {
+            if (username !== location.state?.username) {
+              toast.success(`${username} joined the room.`);
+              console.log(`${username} joined`);
+            }
+            setClients(clients);
+            setEditingPermission(editingPermission);
+            socketRef.current.emit(ACTIONS.SYNC_CODE, {
+              code: codeRef.current,
+              socketId,
+            });
           }
-          setClients(clients);
-          setEditingPermission(editingPermission);
-          socketRef.current.emit(ACTIONS.SYNC_CODE, {
-            code: codeRef.current,
-            socketId,
-          });
-        }
-      );
+        );
 
-      socketRef.current.on(
-        ACTIONS.DISCONNECTED,
-        ({ socketId, username }) => {
-          toast.success(`${username} left the room.`);
-          setClients((prev) => {
-            return prev.filter(
-              (client) => client.socketId !== socketId
-            );
+        socketRef.current.on(
+          ACTIONS.DISCONNECTED,
+          ({ socketId, username }) => {
+            toast.success(`${username} left the room.`);
+            setClients((prev) => {
+              return prev.filter(
+                (client) => client.socketId !== socketId
+              );
+            });
           });
-        }
-      );
+      } catch (error) {
+        console.error("Error initializing socket:", error);
+        // Handle the error (e.g., redirect to the home page)
+      }
     };
+
     init();
+
     return () => {
-      socketRef.current.disconnect();
-      socketRef.current.off(ACTIONS.JOINED);
-      socketRef.current.off(ACTIONS.DISCONNECTED);
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current.off(ACTIONS.JOINED);
+        socketRef.current.off(ACTIONS.DISCONNECTED);
+      }
     };
   }, []);
 

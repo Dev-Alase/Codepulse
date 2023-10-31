@@ -42,7 +42,7 @@ const Home = () => {
             <div className="formWrapper">
                 <img
                     className="homePageLogo"
-                    src="/icon.png"
+                    src={process.env.PUBLIC_URL + '/icon.png'}
                     alt="code-pulse-logo"
                 />
                 <h4 className="mainLabel">Paste the ROOM ID from the invite</h4>
