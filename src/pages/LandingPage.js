@@ -7,6 +7,7 @@ import './Landingstyle.css';
 import './TextAnimation.css';
 
 const LandingPage = () => {
+  console.log('Rendering LandingPage');
   const introText = `Step into coding's fast lane with our real-time editor—your ideas, instantly tangible.No more waiting;
 Just code,
 Collaborate and
