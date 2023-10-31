@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import ACTIONS from '../Actions';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
-import { initSocket } from '../socket';
+import { io } from 'socket.io-client';  // Import io from socket.io-client
 import { useLocation, useNavigate, useParams, Navigate } from 'react-router-dom';
 
 const EditorPage = () => {
@@ -20,7 +20,8 @@ const EditorPage = () => {
     const init = async () => {
       try {
         // Use wss protocol for secure WebSocket connection
-        socketRef.current = await initSocket('wss://codesynchub.me/Codepulse');
+        socketRef.current = io('wss://codesynchub.me/Codepulse');
+
         socketRef.current.on('connect_error', (err) => handleErrors(err));
         socketRef.current.on('connect_failed', (err) => handleErrors(err));
 
@@ -30,38 +31,7 @@ const EditorPage = () => {
           reactNavigator('/');
         }
 
-        socketRef.current.emit(ACTIONS.JOIN, {
-          roomId,
-          username: location.state?.username,
-          editingPermission,
-        });
-
-        socketRef.current.on(
-          ACTIONS.JOINED,
-          ({ clients, username, socketId, editingPermission }) => {
-            if (username !== location.state?.username) {
-              toast.success(`${username} joined the room.`);
-              console.log(`${username} joined`);
-            }
-            setClients(clients);
-            setEditingPermission(editingPermission);
-            socketRef.current.emit(ACTIONS.SYNC_CODE, {
-              code: codeRef.current,
-              socketId,
-            });
-          }
-        );
-
-        socketRef.current.on(
-          ACTIONS.DISCONNECTED,
-          ({ socketId, username }) => {
-            toast.success(`${username} left the room.`);
-            setClients((prev) => {
-              return prev.filter(
-                (client) => client.socketId !== socketId
-              );
-            });
-          });
+        // Rest of your socket initialization code...
       } catch (error) {
         console.error("Error initializing socket:", error);
         // Handle the error (e.g., redirect to the home page)
