@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Codepulse/static/css/main.adc175fa.css",
-    "main.js": "/Codepulse/static/js/main.a97aaac2.js",
+    "main.js": "/Codepulse/static/js/main.8483e8e6.js",
     "static/js/787.4a5f9ec1.chunk.js": "/Codepulse/static/js/787.4a5f9ec1.chunk.js",
     "index.html": "/Codepulse/index.html",
     "main.adc175fa.css.map": "/Codepulse/static/css/main.adc175fa.css.map",
-    "main.a97aaac2.js.map": "/Codepulse/static/js/main.a97aaac2.js.map",
+    "main.8483e8e6.js.map": "/Codepulse/static/js/main.8483e8e6.js.map",
     "787.4a5f9ec1.chunk.js.map": "/Codepulse/static/js/787.4a5f9ec1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.adc175fa.css",
-    "static/js/main.a97aaac2.js"
+    "static/js/main.8483e8e6.js"
   ]
 }
